@@ -5,7 +5,7 @@
  - [ ] Authorization.
  - [x] Registration.
  - [ ] Webpack: extract css chunks.
- - [ ] Build html with weback inseatd of esj + grunt
+ - [ ] Build html with weback instead of esj + grunt
  - [ ] kill Grunt?
  - [ ] Try to use Backbone to sync data.
  - [ ] Modal: wire all modals to one HTML node.
