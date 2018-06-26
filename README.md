@@ -3,7 +3,7 @@
 ## TODO:
  
  - [ ] Authorization.
- - [ * ] Registration.
+ - [ x ] Registration.
  - [ ] Webpack: extract css chunks.
  - [ ] Try to use Backbone to sync data.
  - [ ] Modal: wire all modals to one HTML node.
