@@ -1,0 +1,53 @@
+.ft {
+    &.card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        word-wrap: break-word;
+        background-color: #fdfdfd;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        margin: 20px;
+        width: 300px;
+        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+        cursor: grab;
+    }
+
+    &.card:hover {
+        background-color: white;
+        box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.5);
+    }
+
+    &.card-title {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    &.card-footer {
+        padding: 0.75rem 1.25rem;
+        background-color: transparent !important;
+        border: none !important;
+        // background-color: rgba(0, 0, 0, 0.03);
+        // border-top: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    // dragging
+    &.sortable-task-ghost {
+        opacity: 0.4;
+    }
+    
+    &.sortable-task-chosen {
+        cursor: grabbing;
+    }
+    
+    // act on hover
+    &.show-me-on-hover {
+        opacity: 0;
+    }
+    
+    &.hover-me-to-act:hover > &.show-me-on-hover {
+        opacity: 1;
+    }
+
+}

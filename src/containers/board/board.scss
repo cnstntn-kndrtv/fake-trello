@@ -1,0 +1,43 @@
+// Board
+
+// @import "~bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/_utilities";
+@import "node_modules/bootstrap/scss/grid";
+@import "node_modules/bootstrap/scss/_buttons";
+
+
+.ft {
+    &.flex-container {
+        margin-bottom: 20px;
+    }
+    
+    &.flex-item {
+        height: 100%;
+    }
+    
+    &.board {
+        width: 100vw;
+        height: 100vh;
+        background-color: aliceblue;
+    }
+    
+    &.lists-container {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        padding: 20px;
+        background-color: transparent;
+    }
+
+    &.add-new-list {
+        margin: 20px;
+        padding-right: 40px;
+    }
+}
