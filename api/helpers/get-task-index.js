@@ -39,10 +39,6 @@ module.exports = {
          if (lists.length === 0) return exits.noListFound();
          let list = lists[0];
          let index = list.tasks.length || 1;
-         console.log('---list', list);
-         console.log('---index', index);
-         
-         
          return exits.success(index);
      })
   }

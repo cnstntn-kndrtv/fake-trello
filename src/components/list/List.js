@@ -2,6 +2,7 @@ import hyperHTML from 'hyperhtml/esm'
 import Card from '../card'
 import Sortable from 'sortablejs';
 import NewTaskModal from './NewTaskModal';
+import  EditListModal from './EditListModal';
 import { moveTask } from '../../actions';
 
 // styles
@@ -9,8 +10,9 @@ import './list.scss';
 
 export default class List extends hyperHTML.Component {
     constructor(state) {
-        super();        
-        this.newTaskModal = new NewTaskModal(state);
+        super();
+        this.openEditListModal = this.openEditListModal.bind(this);
+        this.openNewTaskModal = this.openNewTaskModal.bind(this);
         this.setState(state);
     }
 
@@ -37,24 +39,35 @@ export default class List extends hyperHTML.Component {
         });
     }
 
+    openEditListModal() {
+        let rootEl = document.createElement('div');
+        this.element.appendChild(rootEl);
+        hyperHTML.bind(rootEl)`${new EditListModal(this.state, rootEl)}`
+    }
+
+    openNewTaskModal() {
+        let rootEl = document.createElement('div');
+        this.element.appendChild(rootEl);
+        hyperHTML.bind(rootEl)`${new NewTaskModal(this.state, rootEl)}`
+    }
+
     render() {
         return this.html`
             <div onconnected=${this} class='ft hover-me-to-act'>
                 <div class='ft list-title'>
                     ${this.state.title}
-                    <div class='show-me-on-hover'>
-                        <button class='btn btn-link' onclick=${this.newTaskModal.open}>Edit</button>
+                    <div class='ft text-right show-me-on-hover'>
+                        <button class='btn btn-link' onclick=${this.openEditListModal}>Edit</button>
                     </div>
                 </div>
                 <div class='ft list-body' data-list-id=${this.state.id}>
-                    ${this.state.tasks.map((task) => hyperHTML.wire()`
+                    ${this.state.tasks.map((task) => hyperHTML.wire(task)`
                         <div class='ft card' data-task-id=${task.id}>${ new Card(task) }</div>
                     `)}
                 </div>
                 <div class='ft list-footer show-me-on-hover'>
-                    <button class='btn btn-primary' onclick=${this.newTaskModal.open}>Add new task</button>
+                    <button class='btn btn-primary' onclick=${this.openNewTaskModal}>Add new task</button>
                 </div>
-                ${this.newTaskModal}
             </div>
         `
     }

@@ -3,8 +3,12 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+ 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Constant with our paths
@@ -42,15 +46,19 @@ const config = {
     
     optimization: {
         splitChunks: {
+            chunks: 'all',
             cacheGroups: {
                 commons: {
                     test: /[\\/]node_modules[\\/]/,
                     name: '_vendor',
-                    chunks: 'all'
-                }
+                    chunks: 'all',
+                    reuseExistingChunk: false,
+                },
             }
         }
+
     },
+
     module: {
         rules: [
             {
@@ -83,41 +91,67 @@ const config = {
             },
         ]
     },
+
+
     plugins: [
+        new ProgressBarPlugin(),
+
         new CleanWebpackPlugin([paths.DIST]),
         // new HtmlWebpackPlugin({
         //     template: path.join(paths.SRC, "index.html"),
         //     filename: "./index.html",
         //     title: 'Fake-trello',
         // }),
+
+        // css
         new MiniCssExtractPlugin({
             filename: "[name].bundle.css",
+            chunkFilename: '[name].css',
+        }),
+        new OptimizeCssAssetsPlugin({
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: {
+              discardComments: { removeAll: true },
+              zindex: false,
+            },
+            canPrint: true,
+        }),
+
+        // env
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         }),
     ],
+
     resolve: {
         extensions: [".js", ".jsx"]
     },
+
     devServer: {
         port: 3001
     }
 };
 
+if (NODE_ENV === 'none') {
+    config.plugins.push(new BundleAnalyzerPlugin())
+}
+
+// works with webpack dev server
 // if (NODE_ENV === 'development') {
 //     config.entry = [
-//         'react-hot-loader/patch',
 //         'webpack-hot-middleware/client',
 //         './src/index'
 //     ];
 //     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 // }
-// else {
-//     if (NODE_ENV === 'production') {
-//         // config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-//         //     compressor: {
-//         //         warnings: false
-//         //     }
-//         // }));
-//     }
-// }
+
+if (NODE_ENV === 'production') {
+    console.log('----!!!!!!!!!!------');
+    
+    config.plugins.push(new CompressionPlugin({
+        test: /\.js/,
+        algorithm: 'gzip',
+    }))
+}
 
 module.exports = config;

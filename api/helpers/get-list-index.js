@@ -38,7 +38,7 @@ module.exports = {
          if (error) return exits.noBoardsFound();
          if (boards.length === 0) return exits.noBoardsFound();
          let board = boards[0];
-         let index = board.lists.length;
+         let index = board.lists.length || 1;
          return exits.success(index);
      })
   }

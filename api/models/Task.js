@@ -26,7 +26,6 @@ module.exports = {
         // reference to List model
         list: {
             model: 'list',
-            required: true,
         },
 
         // reference to User model

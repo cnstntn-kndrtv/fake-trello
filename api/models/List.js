@@ -37,7 +37,6 @@ module.exports = {
         // many List in one Board
         board: {
             model: 'board',
-            required: true,
         },
         
         // reference to User model
@@ -47,7 +46,7 @@ module.exports = {
         // },
     },
     
-    beforeCreate: async function(values, cb) {
+    beforeCreate: function(values, cb) {
         if (!values.index) {
             sails.helpers.getListIndex(values.board)
                 .exec((err, index) => {
@@ -56,6 +55,5 @@ module.exports = {
                     return cb();
                 })
         }
-    },
-
+    }
 };

@@ -5,13 +5,8 @@
  - [ ] Authorization.
  - [x] Registration.
  - [ ] Webpack: extract css chunks.
- - [ ] Build html with weback instead of esj + grunt
  - [ ] kill Grunt?
- - [ ] Try to use Backbone to sync data.
- - [ ] Modal: wire all modals to one HTML node.
- - [ ] Modal: don`t repeat! Extend some parent class.
- - [ ] Modal: close on click outside dialogue.
- - [ ] Modal: focus on input after open.
+ - [ ] Try to use something to sync data.
 
 
 ## Description

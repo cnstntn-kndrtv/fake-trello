@@ -9,20 +9,25 @@ import { GET_BOARD_DATA,
         DELETE_TASK,
         DELETE_TASK_FETCH,
         ADD_LIST,
-        ADD_LIST_FETCH } from '../actions';
+        ADD_LIST_FETCH,
+        MOVE_LIST,
+        MOVE_LIST_FETCH,
+        EDIT_LIST_CONTENT,
+        EDIT_LIST_CONTENT_FETCH,
+        DELETE_LIST,
+        DELETE_LIST_FETCH } from '../actions';
 
 import { TRANSPORT_METHOD, LOCAL } from '../transport-utilities/Constants'
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash.uniqueid';
 
 let initialState = {
-    1: {title: 1, id: 1, board: 1, tasks: [{title: '1-1', id: 1, list: 1}, {title: '1-2', id: 2, list: 1}]},
-    2: {title: 2, id: 2, board: 1, tasks: [{title: '2', id: 3, list: 2}]},
-    3: {title: 3, id: 3, board: 1, tasks: [{title: '2', id: 4, list: 3}]},
+    1: {title: 1, id: 1, board: 1, index: 3, tasks: [{title: '1-1', id: 1, list: 1}, {title: '1-2', id: 2, list: 1}]},
+    2: {title: 2, id: 2, board: 1, index: 2, tasks: [{title: '2', id: 3, list: 2}]},
+    3: {title: 3, id: 3, board: 1, index: 1, tasks: [{title: '2', id: 4, list: 3}]},
 }
 if ( TRANSPORT_METHOD != LOCAL ) {
     initialState = {};
 }
-
 
 function lists(state = initialState, action) {
     console.log('act', action, 'state', state);
@@ -165,7 +170,51 @@ function lists(state = initialState, action) {
             return {...state, [newList.id]: newList}
         }
 
+        case EDIT_LIST_CONTENT : {
+            let data = action.payload;
+            let nextState = { ...state };
+            nextState[data.id].title = data.title;
+            return nextState;
+        }
 
+        case EDIT_LIST_CONTENT_FETCH + '_SUCCESS' : {
+            let data = action.meta;
+            let nextState = { ...state };
+            nextState[data.id].title = data.title;
+            return nextState;
+        }
+
+        case MOVE_LIST : {
+            let data = action.payload;
+            let nextState = { ...state };
+            nextState[data.id].index = data.targetIndex;
+            console.log('MOVE', nextState);
+            
+            return nextState;
+        }
+
+        case MOVE_LIST_FETCH + '_SUCCESS' : {
+            let data = action.meta;
+            let nextState = { ...state };
+            console.log('-----', data, nextState);
+            
+            nextState[data.id].index = data.targetIndex;
+            return nextState;
+        }
+
+        case DELETE_LIST : {
+            let data = action.payload;
+            let nextState = { ...state };
+            delete(nextState[data.id]);
+            return nextState;
+        }
+
+        case DELETE_LIST_FETCH + '_SUCCESS' : {
+            let data = action.meta;
+            let nextState = { ...state };
+            delete(nextState[data.id]);
+            return nextState;
+        }
         
 
         default: {

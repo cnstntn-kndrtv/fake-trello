@@ -123,7 +123,6 @@ function editTaskContentFetch (params) {
 }
 
 
-
 // delete task
 export const DELETE_TASK = 'DELETE_TASK';
 
@@ -160,6 +159,8 @@ function deleteTaskFetch (params) {
     })
 }
 
+
+
 // add list
 export const ADD_LIST = 'ADD_LIST';
 
@@ -179,28 +180,131 @@ export const addList = (params) => {
 export const ADD_LIST_FETCH = 'ADD_LIST_FETCH';
 
 function addListFetch(params) {
-    
+    store.dispatch({
+        type: ADD_LIST_FETCH,
+        meta: {
+            board: params.board,
+            title: params.title,
+        },
+        $payload: {
+            url: `/list/create/?title=${params.title}&board=${params.board}`,
+            responseType: 'json',
+            options: {
+                method: 'GET'
+            }
+        }
+    })
 }
 
-
+// delete list
 export const DELETE_LIST = 'DELETE_LIST';
 
 export const deleteList = (params) => {
+    if (TRANSPORT_METHOD === FETCH) {
+        return deleteListFetch(params);
+    }
 
+    store.dispatch({
+        type: DELETE_LIST,
+        payload: {
+            id: params.id,
+        },
+    })
+}
+
+export const DELETE_LIST_FETCH = 'DELETE_LIST_FETCH';
+
+function deleteListFetch(params) {
+    store.dispatch({
+        type: DELETE_LIST_FETCH,
+        meta: {
+            id: params.id,
+        },
+        $payload: {
+            url: `/list/${params.id}`,
+            responseType: 'json',
+            options: {
+                method: 'DELETE'
+            }
+        }
+    })
 }
 
 
 export const EDIT_LIST_CONTENT = 'EDIT_LIST_CONTENT';
 
 export const editListContent = (params) => {
+    if (TRANSPORT_METHOD === FETCH) {
+        return editListContentFetch(params);
+    }
 
+    store.dispatch({
+        type: EDIT_LIST_CONTENT,
+        payload: {
+            id: params.id,
+            title: params.title,
+        },
+    })
 }
 
+export const EDIT_LIST_CONTENT_FETCH = 'EDIT_LIST_CONTENT_FETCH';
+
+function editListContentFetch(params) {
+    store.dispatch({
+        type: EDIT_LIST_CONTENT_FETCH,
+        meta: {
+            id: params.id,
+            title: params.title,
+        },
+        $payload: {
+            url: `/list/${params.id}?title=${params.title}`,
+            responseType: 'json',
+            options: {
+                method: 'PATCH'
+            }
+        }
+    })
+}
 
 export const MOVE_LIST = 'MOVE_LIST';
 
 export const moveList = (params) => {
+    let isChanged = false;
+    if ( params.sourceIndex != params.targetIndex ) {
+        isChanged = true;
+    }
+    if (!isChanged) return;
 
+    if (TRANSPORT_METHOD === FETCH) {
+        return moveListFetch(params);
+    }
+    
+    store.dispatch({
+        type: MOVE_LIST,
+        payload: {
+            id: params.id,
+            targetIndex: params.targetIndex,
+        }
+    })
+}
+
+export const MOVE_LIST_FETCH = 'MOVE_LIST_FETCH'
+
+function moveListFetch(params) {
+    store.dispatch({
+        type: MOVE_LIST_FETCH,
+        meta: {
+            id: params.id,
+            targetIndex: params.targetIndex,
+        },
+        $payload: {
+            url: `/list/${params.id}?index=${params.targetIndex}`,
+            responseType: 'json',
+            options: {
+                method: 'PATCH'
+            }
+        }
+    })
 }
 
 // get board data

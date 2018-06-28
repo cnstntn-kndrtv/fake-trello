@@ -1,20 +1,17 @@
 import hyperHTML from 'hyperhtml/esm';
 import { editTaskContent, deleteTask } from '../../actions'
-
-// styles
-import './cardModal.scss';
+import Modal from '../modal';
 
 
-export default class CardModal extends hyperHTML.Component {
-    constructor(state){
+export default class CardModal extends Modal {
+    constructor(state, rootElement){
         super();
+        this.rootElement = rootElement;
 
         this.delete = this.delete.bind(this);
         this.startEdit = this.startEdit.bind(this);
         this.cancelEdit = this.cancelEdit.bind(this);
         this.submitEdit= this.submitEdit.bind(this);
-        this.open = this.open.bind(this);
-        this.close = this.close.bind(this);
 
         this.initialState = {
             windowTitle: 'Task',
@@ -26,9 +23,7 @@ export default class CardModal extends hyperHTML.Component {
             ],
             defaultButtonClass: 'btn btn-default',
         }
-        state.windowTitle = 'Task';
 
-        // save default body content for late
         this.initialState.body = hyperHTML.wire()`
             <div>${state.title}</div>
         `
@@ -70,46 +65,12 @@ export default class CardModal extends hyperHTML.Component {
         this.close();
     }
 
-    onconnected(e) {
-        this.element = e.srcElement;
+    afterConnected() {
+        this.open();
     }
 
-    open() {
-        this.element.style.display = 'block';
+    afterClose() {
+        this.rootElement.remove();
     }
-
-    close() {
-        this.setState(this.initialState);
-        this.element.style.display = 'none';
-    }
-
-    render() {
-        return this.html`
-            <div onconnected=${this} class='modal'>
-                <div class='modal-dialog'>
-                    <div class="modal-content">
-                        <div class='modal-header'>
-                            <div class='modal-title'>${this.state.windowTitle || ''}</div>
-                            <button class="close btn bnt-link" onclick=${this.close} >
-                                <span>&times;</span>
-                            </button>
-                        </div>
-                        <div class='modal-body'>${this.state.body}</div>
-                        ${
-                            this.state.showFooter
-                            ? hyperHTML.wire()`
-                                <div class='modal-footer'>
-                                    ${this.state.buttons
-                                        ? this.state.buttons.map((b) => hyperHTML.wire()`<button class=${b.class? b.class : this.defaultButtonClass} onclick=${b.onclick}>${b.title}</button>`)
-                                        : ''
-                                    }
-                                </div>   
-                            `
-                            : ''
-                        }
-                    </div>
-                </div>
-            </div>
-        `
-    }
+    
 }
