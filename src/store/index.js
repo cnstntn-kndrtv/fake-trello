@@ -16,7 +16,6 @@ if (TRANSPORT_METHOD === FETCH) {
         responseType: 'text',
         // config
         fetchOptions: {
-            // mode: 'no-cors', // TODO
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

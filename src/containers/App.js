@@ -4,12 +4,19 @@ import * as actions from '../actions'
 import Board from './board'
 
 function app() {
-  let rootContainer = new Board(store.getState(), actions);
+  let state = store.getState();
+  let lists = Object.values(state.lists);
+  
+  let rootContainer = new Board({lists: lists}, actions);
 
   hyperHTML(document.querySelector('#root'))`${rootContainer}`
 
   function _app() { 
-    rootContainer.setState(store.getState());
+    let state = store.getState();
+    let lists = Object.values(state.lists)
+    console.log(lists);
+    
+    rootContainer.setState({lists: lists});
   }
 
   _app()

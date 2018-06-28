@@ -33,6 +33,7 @@ export default class Board extends hyperHTML.Component {
             group: {
                 name: 'board',
             },
+            scroll: true,
             ghostClass: "sortable-list-ghost",  // Class name for the drop placeholder
             chosenClass: "sortable-list-chosen", // change class when drag
             onEnd: (e) => {
@@ -42,11 +43,7 @@ export default class Board extends hyperHTML.Component {
                     sourceIndex: e.oldIndex,
                     targetIndex: e.newIndex,
                 }
-                // moveList(params);
-            },
-            onUpdate: (e) => {
-                let el = e.item;
-                el.remove();
+                moveList(params);
             }
         });
     }
@@ -58,23 +55,17 @@ export default class Board extends hyperHTML.Component {
     }
 
     render() {
-        console.log('render');
+        console.log('Board', this.state);
         
-        let lists = Object.values(this.state.lists);
-        lists.sort((a, b) => a.index - b.index);
-        
-        let listNodes = lists.map((l) => hyperHTML.wire(l)`
-            <div class='ft flex-item list' data-list-id=${l.id}>
-                ${new List(l)}
-            </div>`
-        );
+        // let lists = Object.values(this.state.lists);
+        this.state.lists.sort((a, b) => a.index - b.index);
 
         return this.html`
             <div onconnected=${this} class='ft board'>
                 <div class='ft lists-container'>
                     <div class='d-flex flex-row'>
                         <div class='d-flex flex-row ft flex-container draggable-list'>
-                            ${lists.map((l) => hyperHTML.wire(l)`
+                            ${this.state.lists.map((l) => hyperHTML.wire(l)`
                                 <div class='ft flex-item list' data-list-id=${l.id}>
                                     ${new List(l)}
                                 </div>`
