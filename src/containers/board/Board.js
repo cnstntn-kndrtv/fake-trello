@@ -17,7 +17,6 @@ export default class Board extends hyperHTML.Component {
         nextState = { ...state, ...nextState }
 
         this.openNewListModal = this.openNewListModal.bind(this);
-        this.fake = this.fake.bind(this);
 
         this.setState(nextState);
         this.getBoardData();
@@ -43,26 +42,13 @@ export default class Board extends hyperHTML.Component {
                     sourceIndex: e.oldIndex,
                     targetIndex: e.newIndex,
                 }
-                moveList(params);
+                // moveList(params);
             },
             onUpdate: (e) => {
                 let el = e.item;
                 el.remove();
             }
         });
-    }
-
-    fake() {
-        let i = Math.round(Math.random() * 3);
-        let id = 1;
-        let params = {
-            id: id,
-            sourceIndex: this.state.lists[id].index,
-            targetIndex: i,
-        }
-        console.log(params.sourceIndex, params.targetIndex);
-        
-        moveList(params)
     }
 
     openNewListModal() {
@@ -84,7 +70,6 @@ export default class Board extends hyperHTML.Component {
         );
 
         return this.html`
-        <button class='btn btn-danger' onclick=${this.fake}>MOVE</button>
             <div onconnected=${this} class='ft board'>
                 <div class='ft lists-container'>
                     <div class='d-flex flex-row'>
