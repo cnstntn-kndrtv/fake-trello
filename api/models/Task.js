@@ -30,9 +30,9 @@ module.exports = {
 
         // reference to User model
         // one User owns many Cards
-        // owner: {
-        //     model: 'user',
-        // },
+        owner: {
+            model: 'user',
+        },
 
     },
 

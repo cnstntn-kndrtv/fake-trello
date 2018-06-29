@@ -41,7 +41,7 @@ module.exports.sockets = {
   * https://sailsjs.com/config/sockets#?beforeconnect                        *
   *                                                                          *
   ***************************************************************************/
-
+  
   // beforeConnect: function(handshake, proceed) {
   //
   //   // `true` allows the socket to connect.

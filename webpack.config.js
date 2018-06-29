@@ -39,7 +39,7 @@ const config = {
     entry: ['babel-polyfill', path.join(paths.SRC, "index.js")],
     output : {
         path : paths.DIST,
-        publicPath: __dirname + '.tmp/public/build',
+        // publicPath: __dirname + '.tmp/public/build',
         filename : '[name].bundle.js',
         sourceMapFilename: '[name].bundle.js.map',
     },
@@ -97,9 +97,10 @@ const config = {
         new ProgressBarPlugin(),
 
         new CleanWebpackPlugin([paths.DIST]),
+
         // new HtmlWebpackPlugin({
-        //     template: path.join(paths.SRC, "index.html"),
-        //     filename: "./index.html",
+        //     // template: path.join(paths.SRC, "index.html"),
+        //     filename: `${paths.DIST}/index.html`,
         //     title: 'Fake-trello',
         // }),
 
@@ -145,9 +146,7 @@ if (NODE_ENV === 'none') {
 //     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 // }
 
-if (NODE_ENV === 'production') {
-    console.log('----!!!!!!!!!!------');
-    
+if (NODE_ENV === 'production') {    
     config.plugins.push(new CompressionPlugin({
         test: /\.js/,
         algorithm: 'gzip',

@@ -14,8 +14,10 @@ if (TRANSPORT_METHOD === FETCH) {
         debug: true,
         // Global value by `responseType`. Available values: json, text, formData, blob, arrayBuffer (fetch methods). Default: json
         responseType: 'text',
-        // config
+        
         fetchOptions: {
+            // same as whatwg-fetch
+            credentials: 'same-origin',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -25,6 +27,7 @@ if (TRANSPORT_METHOD === FETCH) {
     const restMiddleware = restMiddlewareCreator(globalRestOptions);
     middleware.push(restMiddleware);
 }
+
 
 let store = Redux.createStore(reducers, composeWithDevTools(Redux.applyMiddleware(...middleware)));
 

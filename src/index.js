@@ -1,15 +1,16 @@
-import app from './containers/App';
-import navigo from 'navigo';
+import home from './views/home';
+import login from './views/login';
+import board from './views/board';
+import { router, withAuthorization, LOGIN_PAGE, HOME_PAGE, BOARD_PAGE } from './router';
 
-//set options for router
-const root = null
-const useHash = false
-const hash = '#!'
-const router = new navigo(root, useHash, hash)
+let routes ={};
+routes[HOME_PAGE] = () => home();
+routes[LOGIN_PAGE] = () => login(BOARD_PAGE);
+routes[BOARD_PAGE] = () => { withAuthorization(board) };
 
-//routing will be done in this file.
+// route
 router
-    .on({
-        '/': () => { app() }
-    })
+    .on(routes)
     .resolve();
+
+router.updatePageLinks();

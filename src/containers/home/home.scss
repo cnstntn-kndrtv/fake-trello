@@ -1,5 +1,3 @@
-// Board
-
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
@@ -10,33 +8,15 @@
 @import "node_modules/bootstrap/scss/_media";
 @import "node_modules/bootstrap/scss/_buttons";
 
-.board-flex-container {
-    margin-bottom: 20px;
-    height: 100%;
-}
-
-.board-flex-item {
-    height: 100%;
-}
-
-.board {
-    width: 100vw;
-    height: 100vh;
+.home-background {
     background-color: aliceblue;
-}
-
-.board-lists-container {
-    position: fixed;
     width: 100vw;
     height: 100vh;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    padding: 20px;
-    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-
-.board-add-new-list {
-    margin: 20px;
-    padding-right: 40px;
+    
+.home-banner {
+        margin-top: 50px;
 }
-

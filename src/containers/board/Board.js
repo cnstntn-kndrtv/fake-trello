@@ -55,23 +55,21 @@ export default class Board extends hyperHTML.Component {
     }
 
     render() {
-        console.log('Board', this.state);
-        
         // let lists = Object.values(this.state.lists);
         this.state.lists.sort((a, b) => a.index - b.index);
 
         return this.html`
-            <div onconnected=${this} class='ft board'>
-                <div class='ft lists-container'>
+            <div onconnected=${this} class='board'>
+                <div class='board-lists-container'>
                     <div class='d-flex flex-row'>
-                        <div class='d-flex flex-row ft flex-container draggable-list'>
+                        <div class='d-flex flex-row board-flex-container draggable-list'>
                             ${this.state.lists.map((l) => hyperHTML.wire(l)`
-                                <div class='ft flex-item list' data-list-id=${l.id}>
+                                <div class='board-flex-item ft list' data-list-id=${l.id}>
                                     ${new List(l)}
                                 </div>`
                             )}
                         </div>
-                        <div class='ft flex-item add-new-list'>
+                        <div class='board-flex-item board-add-new-list'>
                             <button class='btn btn-default' onclick=${this.openNewListModal}>add new list</button>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import { GET_BOARD_DATA, 
+import {
         GET_BOARD_DATA_FETCH, 
         ADD_TASK,
         ADD_TASK_FETCH,
@@ -30,11 +30,9 @@ if ( TRANSPORT_METHOD != LOCAL ) {
 }
 
 function lists(state = initialState, action) {
-    console.log('act', action, 'state', state);
-    
-    // return state;
 
     switch (action.type) {
+
         case GET_BOARD_DATA_FETCH + '_SUCCESS' : {
             let newState = {};
             for (let key in action.data) {
@@ -188,16 +186,12 @@ function lists(state = initialState, action) {
             let data = action.payload;
             let nextState = { ...state };
             nextState[data.id].index = data.targetIndex;
-            console.log('MOVE', nextState);
-            
             return nextState;
         }
 
         case MOVE_LIST_FETCH + '_SUCCESS' : {
             let data = action.meta;
             let nextState = { ...state };
-            console.log('-----', data, nextState);
-            
             nextState[data.id].index = data.targetIndex;
             return nextState;
         }

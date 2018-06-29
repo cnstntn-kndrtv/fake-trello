@@ -61,9 +61,11 @@ module.exports = function(grunt) {
         appRoot: '.tmp/public'
       },
       files: {
-        '.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.ejs': ['.tmp/public/min/production.min.js']
+        // '.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
+        // 'views/**/*.html': ['.tmp/public/min/production.min.js'],
+        // 'views/**/*.ejs': ['.tmp/public/min/production.min.js'],
+        // 'views/**/*.ejs': ['.tmp/public/build/_vendor.bundle.js.gz'],
+        // 'views/**/*.ejs': ['.tmp/public/build/main.bundle.js.gz'],
       }
     },
 
@@ -78,9 +80,9 @@ module.exports = function(grunt) {
         //    (but be note that this can break custom font URLs)
       },
       files: {
-        '.tmp/public/**/*.html': ['.tmp/public/dist/*.js'],
-        'views/**/*.html': ['.tmp/public/dist/*.js'],
-        'views/**/*.ejs': ['.tmp/public/dist/*.js']
+        '.tmp/public/**/*.html': ['.tmp/public/build/*.js'],
+        'views/**/*.html': ['.tmp/public/duild/*.js'],
+        'views/**/*.ejs': ['.tmp/public/build/*.js']
       }
     },
 
@@ -149,9 +151,9 @@ module.exports = function(grunt) {
         //    (but be note that this can break custom font URLs)
       },
       files: {
-        '.tmp/public/index.html': ['.tmp/public/dist/*.css'],
-        'views/**/*.html': ['.tmp/public/dist/*.css'],
-        'views/**/*.ejs': ['.tmp/public/dist/*.css']
+        '.tmp/public/index.html': ['.tmp/public/build/*.css'],
+        'views/**/*.html': ['.tmp/public/build/*.css'],
+        'views/**/*.ejs': ['.tmp/public/build/*.css']
       }
     },
 

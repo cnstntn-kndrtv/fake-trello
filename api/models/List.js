@@ -41,9 +41,9 @@ module.exports = {
         
         // reference to User model
         // one User owns many Lists
-        // owner: {
-        //     model: 'user',
-        // },
+        owner: {
+            model: 'user',
+        },
     },
     
     beforeCreate: function(values, cb) {

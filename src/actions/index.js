@@ -1,5 +1,62 @@
 import store from '../store';
-import { TRANSPORT_METHOD, FETCH } from '../transport-utilities/Constants';
+import { TRANSPORT_METHOD, FETCH, API_PREFIX } from '../transport-utilities/Constants';
+
+export const IS_LOGGED_IN = 'IS_LOGGED_IN';
+
+export const isLoggedIn = () => {
+    store.dispatch({
+        type: IS_LOGGED_IN,
+        payload: {},
+    })
+}
+
+// login
+export const LOGIN = 'LOGIN';
+
+export const login = (params) => {
+    if (!params.email || !params.password) return;
+
+    if (TRANSPORT_METHOD === FETCH) {
+        return loginFetch(params);
+    }
+
+    const fakeUser = {
+        email: 'user@example.com',
+        password: 'user',
+    }
+    
+    if (params.email != fakeUser.email) return;
+    if (params.password != fakeUser.password) return;
+    
+    store.dispatch({
+        type: LOGIN,
+        payload: {
+            email: params.email,
+            password: params.password,
+        }
+    })
+}
+
+export const LOGIN_FETCH = 'LOGIN_FETCH';
+
+function loginFetch(params) {
+    store.dispatch({
+        type: LOGIN_FETCH,
+        meta: {
+            email: params.email,
+            password: params.password,
+        },
+        $payload: {
+            url: `${API_PREFIX}/login/?email=${params.email}&password=${params.password}`,
+            responseType: 'json',
+            options: {
+                method: 'GET'
+            }
+        }
+    })
+}
+
+
 
 // task constants
 export const ADD_TASK = 'ADD_TASK';
@@ -27,7 +84,7 @@ function addTaskFetch(params) {
             title: params.title,
         },
         $payload: {
-            url: `/task/create/?title=${params.title}&list=${params.list}`,
+            url: `${API_PREFIX}/task/create/?title=${params.title}&list=${params.list}`,
             responseType: 'json',
             options: {
                 method: 'GET'
@@ -75,7 +132,7 @@ function moveTaskFetch(params) {
             targetIndex: params.targetIndex,
         },
         $payload: {
-            url: `/task/${params.id}?list=${params.targetList}&index=${params.targetIndex}`,
+            url: `${API_PREFIX}/task/${params.id}?list=${params.targetList}&index=${params.targetIndex}`,
             responseType: 'json',
             options: {
                 method: 'PATCH'
@@ -113,7 +170,7 @@ function editTaskContentFetch (params) {
             list: params.list,
         },
         $payload: {
-            url: `/task/${params.id}?title=${params.title}`,
+            url: `${API_PREFIX}/task/${params.id}?title=${params.title}`,
             responseType: 'json',
             options: {
                 method: 'PATCH'
@@ -150,7 +207,7 @@ function deleteTaskFetch (params) {
             list: params.list,
         },
         $payload: {
-            url: `/task/${params.id}`,
+            url: `${API_PREFIX}/task/${params.id}`,
             responseType: 'json',
             options: {
                 method: 'DELETE'
@@ -187,7 +244,7 @@ function addListFetch(params) {
             title: params.title,
         },
         $payload: {
-            url: `/list/create/?title=${params.title}&board=${params.board}`,
+            url: `${API_PREFIX}/list/create/?title=${params.title}&board=${params.board}`,
             responseType: 'json',
             options: {
                 method: 'GET'
@@ -221,7 +278,7 @@ function deleteListFetch(params) {
             id: params.id,
         },
         $payload: {
-            url: `/list/${params.id}`,
+            url: `${API_PREFIX}/list/${params.id}`,
             responseType: 'json',
             options: {
                 method: 'DELETE'
@@ -257,7 +314,7 @@ function editListContentFetch(params) {
             title: params.title,
         },
         $payload: {
-            url: `/list/${params.id}?title=${params.title}`,
+            url: `${API_PREFIX}/list/${params.id}?title=${params.title}`,
             responseType: 'json',
             options: {
                 method: 'PATCH'
@@ -298,7 +355,7 @@ function moveListFetch(params) {
             targetIndex: params.targetIndex,
         },
         $payload: {
-            url: `/list/${params.id}?index=${params.targetIndex}`,
+            url: `${API_PREFIX}/list/${params.id}?index=${params.targetIndex}`,
             responseType: 'json',
             options: {
                 method: 'PATCH'
@@ -330,7 +387,7 @@ function getBoardDataFetch(params) {
             id: params.id
         },
         $payload: {
-            url: `/list/?board=${params.id}`,
+            url: `${API_PREFIX}/list/?board=${params.id}`,
             responseType: 'json',
             options: {
                 method: 'GET'
