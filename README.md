@@ -26,7 +26,7 @@ which includes:
 - Starts Nodemon over Sails (to monitor changes)  
 
 
-## whats next on a way to persect stack?
+## whats next?
 
 - [ ] best structure
 - [ ] more purity and immutability
